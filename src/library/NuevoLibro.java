@@ -39,8 +39,8 @@ public class NuevoLibro extends javax.swing.JDialog {
         ISBN = new javax.swing.JTextField();
         paginas = new javax.swing.JSpinner();
         comboGeneros = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btn_alta = new javax.swing.JButton();
+        btn_atras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -62,9 +62,9 @@ public class NuevoLibro extends javax.swing.JDialog {
 
         comboGeneros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton1.setText("Alta");
+        btn_alta.setText("Alta");
 
-        jButton2.setText("Atrás");
+        btn_atras.setText("Atrás");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -101,9 +101,9 @@ public class NuevoLibro extends javax.swing.JDialog {
                                     .addComponent(comboAutores, javax.swing.GroupLayout.PREFERRED_SIZE, 304, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(96, 96, 96)
-                        .addComponent(jButton1)
+                        .addComponent(btn_alta)
                         .addGap(55, 55, 55)
-                        .addComponent(jButton2)))
+                        .addComponent(btn_atras)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -137,8 +137,8 @@ public class NuevoLibro extends javax.swing.JDialog {
                     .addComponent(comboGeneros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btn_alta)
+                    .addComponent(btn_atras))
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
@@ -189,10 +189,10 @@ public class NuevoLibro extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField ISBN;
+    private javax.swing.JButton btn_alta;
+    private javax.swing.JButton btn_atras;
     private javax.swing.JComboBox<String> comboAutores;
     private javax.swing.JComboBox<String> comboGeneros;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

@@ -37,6 +37,7 @@ public class Menu extends javax.swing.JFrame {
         btn_a_nombre = new javax.swing.JButton();
         btn_a_modificar = new javax.swing.JButton();
         btn_a_eliminar = new javax.swing.JButton();
+        btn_altaUsu = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -101,6 +102,8 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btn_altaUsu.setText("Alta usuarios");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -131,6 +134,10 @@ public class Menu extends javax.swing.JFrame {
                                     .addComponent(btn_a_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(btn_a_modificar))))))
                 .addGap(70, 70, 70))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_altaUsu)
+                .addGap(158, 158, 158))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,7 +162,9 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btn_l_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_consultas)
-                .addContainerGap(70, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btn_altaUsu)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         pack();
@@ -228,6 +237,7 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btn_a_eliminar;
     private javax.swing.JButton btn_a_modificar;
     private javax.swing.JButton btn_a_nombre;
+    private javax.swing.JButton btn_altaUsu;
     private javax.swing.JButton btn_consultas;
     private javax.swing.JButton btn_l_eliminar;
     private javax.swing.JButton btn_l_modificar;

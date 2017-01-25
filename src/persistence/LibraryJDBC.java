@@ -2,9 +2,11 @@ package persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import model.Book;
 
 public class LibraryJDBC {
     private Connection connection;
@@ -19,7 +21,6 @@ public class LibraryJDBC {
             connection.close();
         }
     }
-    
     public boolean validar(String user, String pass) throws SQLException{
         boolean validar = false;
         conectar();
@@ -35,6 +36,17 @@ public class LibraryJDBC {
         st.close();
         desconectar();
         return validar;
+    }
+    public void insertBook(Book b) throws SQLException{
+        String insert = "insert into book values (?, ?, ?, ?, ?);";
+        PreparedStatement ps = connection.prepareStatement(insert);
+        ps.setInt(1, b.getIsbn());
+        ps.setString(2, b.getTitle());
+        ps.setInt(3, b.getNpages());
+        ps.setString(4, b.getGenre());
+        ps.setString(5, b.);
+        ps.executeUpdate();
+        ps.close();
     }
     
 }
