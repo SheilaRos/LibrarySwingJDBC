@@ -4,13 +4,14 @@ public class Book {
     private String title;
     private int npages;
     private String genre;
-    private Author aurhor;
-    public Book(int isbn, String title, int npages, String genre, Author aurhor) {
+    private Author author;
+    public Book() {}
+    public Book(int isbn, String title, int npages, String genre, Author author) {
         this.isbn = isbn;
         this.title = title;
         this.npages = npages;
         this.genre = genre;
-        this.aurhor = aurhor;
+        this.author = author;
     }
 
     public int getIsbn() {   return isbn;}
@@ -21,6 +22,12 @@ public class Book {
     public void setNpages(int npages) {   this.npages = npages;}
     public String getGenre() {   return genre;}
     public void setGenre(String genre) {  this.genre = genre;}
-    public Author getAurhor() {   return aurhor; }
-    public void setAurhor(Author aurhor) {  this.aurhor = aurhor;}  
+    public Author getAuthor() {   return author; }
+    public void setAuthor(Author author) {  this.author = author;}  
+
+    @Override
+    public String toString() {
+        return title + " - " + author;
+    }
+    
 }

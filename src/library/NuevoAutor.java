@@ -5,17 +5,39 @@
  */
 package library;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Author;
+import model.User;
+import persistence.LibraryJDBC;
+
 /**
  *
  * @author dam
  */
 public class NuevoAutor extends javax.swing.JDialog {
-
-    /**
-     * Creates new form NuevoLibro
-     */
+    LibraryJDBC gestor = new LibraryJDBC();
+    List<String> paises = new ArrayList<>();
+    public List<String> getPaises() {return paises;}
+    public void setPaises(List<String> paises) {this.paises = paises;}
+    
     public NuevoAutor(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
+        super(parent, modal);  
+        paises.add("Alemania");
+        paises.add("España");
+        paises.add("USA");
+        paises.add("Rusia");
+        paises.add("Inglaterra");
+        paises.add("Irlanda");
+        paises.add("Polonia");
+        paises.add("Francia");
+        paises.add("Japón");
+        paises.add("China");
+        
         initComponents();
     }
 
@@ -27,6 +49,7 @@ public class NuevoAutor extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jLabel1 = new javax.swing.JLabel();
         btn_nombre = new javax.swing.JLabel();
@@ -51,10 +74,24 @@ public class NuevoAutor extends javax.swing.JDialog {
         jLabel6.setText("País:");
 
         btn_alta.setText("Alta");
+        btn_alta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_altaActionPerformed(evt);
+            }
+        });
 
         btn_atras.setText("Atrás");
+        btn_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_atrasActionPerformed(evt);
+            }
+        });
 
         comboPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${paises}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, comboPais);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,7 +133,7 @@ public class NuevoAutor extends javax.swing.JDialog {
                     .addComponent(btn_apellidos)
                     .addComponent(apellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(comboPais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33)
@@ -106,8 +143,33 @@ public class NuevoAutor extends javax.swing.JDialog {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altaActionPerformed
+        if(nombre.getText().equals("") || apellidos.getText().equals("")){  
+            JOptionPane.showMessageDialog(this, "El nombre y apellido no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        } else{
+            try {
+                if(gestor.comprobarAutor(nombre.getText(), apellidos.getText())){
+                     JOptionPane.showMessageDialog(this, "Este autor ya existe", "Autor duplicado", JOptionPane.ERROR_MESSAGE);
+                }else{
+                        Author a = new Author(1, nombre.getText(), apellidos.getText(), comboPais.getSelectedItem().toString());
+                        gestor.insertAuthor(a);
+                        JOptionPane.showMessageDialog(this, "Autor dado de alta", "Alta autor", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }     
+    }//GEN-LAST:event_btn_altaActionPerformed
+
+    private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_atrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,5 +224,6 @@ public class NuevoAutor extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField nombre;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

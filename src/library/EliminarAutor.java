@@ -5,17 +5,31 @@
  */
 package library;
 
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import model.Author;
+import model.Book;
+import persistence.LibraryJDBC;
+
 /**
  *
  * @author dam
  */
 public class EliminarAutor extends javax.swing.JDialog {
-
-    /**
-     * Creates new form EliminarLibro
-     */
+    LibraryJDBC gestor = new LibraryJDBC();
+    private List<Author> authors;
+    public List<Author> getAuthors() {return authors;}
+    public void setAuthors(List<Author> authors) { this.authors = authors; }
     public EliminarAutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        try {
+            authors = gestor.allAuthors();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
         initComponents();
     }
 
@@ -27,6 +41,7 @@ public class EliminarAutor extends javax.swing.JDialog {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -44,9 +59,23 @@ public class EliminarAutor extends javax.swing.JDialog {
 
         comboAutor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${authors}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, comboAutor);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         btn_eliminar.setText("Eliminar");
+        btn_eliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_eliminarActionPerformed(evt);
+            }
+        });
 
         btn_atras.setText("Atrás");
+        btn_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_atrasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,8 +115,28 @@ public class EliminarAutor extends javax.swing.JDialog {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar este autor?", "Eliminar autor", JOptionPane.OK_CANCEL_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            
+            Author a = (Author) comboAutor.getSelectedItem();
+            try {
+                gestor.deleteAuthor(a.getIdauthor());
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }
+        this.dispose();
+    }//GEN-LAST:event_btn_eliminarActionPerformed
+
+    private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_atrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -138,5 +187,6 @@ public class EliminarAutor extends javax.swing.JDialog {
     private javax.swing.JComboBox<String> comboAutor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import persistence.LibraryJDBC;
 
 public class Principal extends javax.swing.JFrame {
+    public static boolean admin;
     LibraryJDBC gestor = new LibraryJDBC();
     public Principal() {
         initComponents();
@@ -83,9 +84,15 @@ public class Principal extends javax.swing.JFrame {
         String pass = new String(passw.getPassword());
         boolean valido = gestor.validar(name, pass);
         if(valido){
+            if(name.equals("admin") && pass.equals("admin")){
+                admin = true;
+            }else{
+                admin = false;
+            }
             Menu m = new Menu();
             m.setLocationRelativeTo(null);
             m.setVisible(true);
+            this.dispose();
         }else{
             user.setText("");
             passw.setText("");

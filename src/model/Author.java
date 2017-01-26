@@ -5,6 +5,12 @@ public class Author {
     private String name;
     private String surname;
     private String country;
+
+    public Author() {
+    }
+    public Author(String name) {
+        this.name = name;
+    }
     
     public Author(int idauthor, String name, String surname, String country) {
         this.idauthor = idauthor;
@@ -19,5 +25,11 @@ public class Author {
     public String getSurname() {  return surname;}
     public void setSurname(String surname) {    this.surname = surname; }
     public String getCountry() {    return country; }
-    public void setCountry(String country) {   this.country = country;}  
+    public void setCountry(String country) {   this.country = country;}
+
+    @Override
+    public String toString() {
+        return  name + " " + surname;
+    }
+    
 }

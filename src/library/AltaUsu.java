@@ -5,15 +5,16 @@
  */
 package library;
 
+import javax.swing.JOptionPane;
+import model.User;
+import persistence.LibraryJDBC;
+
 /**
  *
  * @author dam
  */
 public class AltaUsu extends javax.swing.JDialog {
-
-    /**
-     * Creates new form AltaUsu
-     */
+    LibraryJDBC gestor = new LibraryJDBC();
     public AltaUsu(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -50,8 +51,18 @@ public class AltaUsu extends javax.swing.JDialog {
         jLabel4.setText("Contraseña:");
 
         btn_alta.setText("Alta");
+        btn_alta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_altaActionPerformed(evt);
+            }
+        });
 
         btn_atras.setText("Atrás");
+        btn_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_atrasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,6 +111,30 @@ public class AltaUsu extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_atrasActionPerformed
+
+    private void btn_altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altaActionPerformed
+        String pass = new String(passw.getPassword());
+       if(usu.getText().equals("") || pass.equals("")){
+            JOptionPane.showMessageDialog(this, "El usuario y la contraseña no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else{    
+            try{
+                if(gestor.comprobarUsuario(usu.getText())){
+                        JOptionPane.showMessageDialog(this, "Este usuario ya existe", "Usuario duplicado", JOptionPane.ERROR_MESSAGE);       
+                }else{
+                        User u = new User (usu.getText(), pass);
+                        gestor.insertUsu(u);
+                        JOptionPane.showMessageDialog(this, "Usuario dado de alta", "Alta usuario", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                    }
+                }catch(Exception ex){
+                    System.out.println(ex);
+                }
+       }
+    }//GEN-LAST:event_btn_altaActionPerformed
 
     /**
      * @param args the command line arguments
