@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Author;
 import model.Book;
 import persistence.LibraryJDBC;
@@ -38,6 +39,7 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jLabel1 = new javax.swing.JLabel();
         btn_nombre = new javax.swing.JLabel();
@@ -65,10 +67,24 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
         jLabel6.setText("País:");
 
         btn_modificar.setText("Modificar");
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
 
         btn_atras.setText("Atrás");
+        btn_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_atrasActionPerformed(evt);
+            }
+        });
 
         comboPais.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${paises}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, comboPais);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 0, 255));
@@ -77,6 +93,10 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
         jLabel3.setText("Autor:");
 
         comboAutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${autores}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, comboAutores);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -103,7 +123,6 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
                         .addGap(16, 16, 16)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
                                 .addComponent(btn_modificar)
                                 .addGap(52, 52, 52)
                                 .addComponent(btn_atras))
@@ -150,8 +169,30 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
                 .addGap(30, 30, 30))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_atrasActionPerformed
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        Author au = (Author)comboAutores.getSelectedItem();
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de modificar este autor: "+au+"?", "Modificar Autor", JOptionPane.OK_CANCEL_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            try {
+                Author a = new Author(au.getIdauthor(), nombre.getText(), apellidos.getText(), comboPais.getSelectedItem().toString());
+                gestor.updateAuthor(a);
+                JOptionPane.showMessageDialog(this, "Autor modificado", "Modificar autor", JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+                
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            }
+        }
+    }//GEN-LAST:event_btn_modificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,6 +252,7 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField nombre;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     @Override

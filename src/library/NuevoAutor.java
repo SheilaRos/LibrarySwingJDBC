@@ -24,7 +24,6 @@ public class NuevoAutor extends javax.swing.JDialog {
     private List<String> paises = Menu.paises;
     public List<String> getPaises() {return paises;}
     public void setPaises(List<String> paises) {this.paises = paises;}
-    
     public NuevoAutor(java.awt.Frame parent, boolean modal) {
         super(parent, modal);  
         initComponents();
@@ -147,7 +146,6 @@ public class NuevoAutor extends javax.swing.JDialog {
                 }else{
                         Author a = new Author(1, nombre.getText(), apellidos.getText(), comboPais.getSelectedItem().toString());
                         gestor.insertAuthor(a);
-                        System.out.println(a);
                         JOptionPane.showMessageDialog(this, "Autor dado de alta", "Alta autor", JOptionPane.INFORMATION_MESSAGE);
                         this.dispose();
                 }

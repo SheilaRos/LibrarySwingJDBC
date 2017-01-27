@@ -176,8 +176,8 @@ public class NuevoLibro extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altaActionPerformed
-        if(tituloLibro.getText().equals("") || ISBN.getText().equals("")){
-            
+        if(tituloLibro.getText().equals("") || ISBN.getText().equals("") || paginas.getValue().equals(0)){
+            JOptionPane.showMessageDialog(this, "El título y ISBN no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
         }else{
             int isbn = Integer.parseInt(ISBN.getText());
             try{

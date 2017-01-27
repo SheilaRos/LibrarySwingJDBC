@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import model.Author;
 import model.Book;
 import persistence.LibraryJDBC;
@@ -68,7 +69,6 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
         jLabel6 = new javax.swing.JLabel();
         tituloLibro = new javax.swing.JTextField();
         comboAutores = new javax.swing.JComboBox<>();
-        ISBN = new javax.swing.JTextField();
         paginas = new javax.swing.JSpinner();
         comboGeneros = new javax.swing.JComboBox<>();
         btn_modificar = new javax.swing.JButton();
@@ -76,6 +76,7 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
         jLabel7 = new javax.swing.JLabel();
         comboLibro = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
+        ISBN = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -106,8 +107,18 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
         bindingGroup.addBinding(jComboBoxBinding);
 
         btn_modificar.setText("Modificar");
+        btn_modificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_modificarActionPerformed(evt);
+            }
+        });
 
         btn_atras.setText("Atrás");
+        btn_atras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_atrasActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Libro:");
 
@@ -120,6 +131,8 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 51, 255));
         jLabel8.setText("Datos modificados del libro");
+
+        ISBN.setText("jLabel9");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -149,10 +162,10 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
                                     .addComponent(jLabel2))
                                 .addGap(23, 23, 23)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(ISBN, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
-                                    .addComponent(comboLibro, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(comboLibro, 0, 311, Short.MAX_VALUE)
                                     .addComponent(tituloLibro)
-                                    .addComponent(comboAutores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(comboAutores, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(ISBN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5)
@@ -186,7 +199,7 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(ISBN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(ISBN))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -199,13 +212,39 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_modificar)
                     .addComponent(btn_atras))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_atrasActionPerformed
+
+    private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
+        Book bk = (Book)comboLibro.getSelectedItem();
+        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de modificar este libro: "+bk.getTitle() +"?", "Modificar libro", JOptionPane.OK_CANCEL_OPTION);
+        if (respuesta == JOptionPane.YES_OPTION) {
+            if(tituloLibro.getText().equals("") || ISBN.getText().equals("") || paginas.getValue().equals(0)){
+                JOptionPane.showMessageDialog(this, "El título y ISBN no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+            }else{
+                int isbn = Integer.parseInt(ISBN.getText());
+                try{
+                    Author a = (Author)comboAutores.getSelectedItem();
+                    int pag =(int) paginas.getValue();
+                    Book b = new Book(isbn, tituloLibro.getText(), pag, comboGeneros.getSelectedItem().toString(), a);
+                    gestor.updateBook(b);
+                    JOptionPane.showMessageDialog(this, "Libro modificado", "Regitro de libros", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                }catch(Exception ex){
+                    System.out.println(ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_btn_modificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -251,7 +290,7 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField ISBN;
+    private javax.swing.JLabel ISBN;
     private javax.swing.JButton btn_atras;
     private javax.swing.JButton btn_modificar;
     private javax.swing.JComboBox<String> comboAutores;

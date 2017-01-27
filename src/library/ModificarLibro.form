@@ -49,12 +49,12 @@
                                   </Group>
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                              <EmptySpace min="23" pref="23" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="ISBN" alignment="0" pref="311" max="32767" attributes="0"/>
-                                  <Component id="comboLibro" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="comboLibro" alignment="0" pref="311" max="32767" attributes="0"/>
                                   <Component id="tituloLibro" alignment="0" max="32767" attributes="0"/>
                                   <Component id="comboAutores" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="ISBN" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Component id="jLabel8" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -117,7 +117,7 @@
                   <Component id="btn_modificar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btn_atras" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace pref="32" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -179,8 +179,6 @@
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
       </AuxValues>
     </Component>
-    <Component class="javax.swing.JTextField" name="ISBN">
-    </Component>
     <Component class="javax.swing.JSpinner" name="paginas">
     </Component>
     <Component class="javax.swing.JComboBox" name="comboGeneros">
@@ -205,11 +203,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Modificar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_modificarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btn_atras">
       <Properties>
         <Property name="text" type="java.lang.String" value="Atr&#xe1;s"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_atrasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -243,6 +247,11 @@
           <Color blue="ff" green="33" red="0" type="rgb"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Datos modificados del libro"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="ISBN">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="jLabel9"/>
       </Properties>
     </Component>
   </SubComponents>

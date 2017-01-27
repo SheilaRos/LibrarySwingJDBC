@@ -1,9 +1,16 @@
 package library;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Author;
+import model.Book;
+import persistence.LibraryJDBC;
 
 public class Menu extends javax.swing.JFrame {
+    LibraryJDBC gestor = new LibraryJDBC();
     public static List<String> generos = new ArrayList<>();
     public List<String> getGeneros() {return generos; }
     public void setGeneros(List<String> generos) {this.generos = generos;}  
@@ -12,6 +19,9 @@ public class Menu extends javax.swing.JFrame {
     public void setPaises(List<String> paises) { this.paises = paises; }
     public Menu() {
         initComponents();
+        if(!generos.contains("Selecciona un genero")){
+            generos.add("Selecciona un genero");
+        }
         generos.add("Fantasía");
         generos.add("Terror");
         generos.add("Suspense");
@@ -22,6 +32,9 @@ public class Menu extends javax.swing.JFrame {
         generos.add("Novela ligera");
         generos.add("Ciencia ficción");
         generos.add("Policiaca");
+        if(!paises.contains("Selecciona un país.")){
+            paises.add("Selecciona un país.");
+        }
         paises.add("Alemania");
         paises.add("España");
         paises.add("USA");
@@ -32,6 +45,18 @@ public class Menu extends javax.swing.JFrame {
         paises.add("Francia");
         paises.add("Japón");
         paises.add("China");
+        Author a = new Author(0, "Selecciona un autor", "", "");
+        Book b = new Book(0, "Selecciona un libro",0, "", a);
+        try {
+            if(!gestor.comprobarISBN(b.getIsbn())){
+             gestor.insertBook(b);
+            }if(!gestor.comprobarAutor(a.getName(), a.getSurname())){
+                gestor.insertAuthor(a);
+            }
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }
+        
         if(!Principal.admin){
             btn_altaUsu.setVisible(false);
         }

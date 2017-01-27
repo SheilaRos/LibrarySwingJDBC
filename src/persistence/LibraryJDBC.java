@@ -106,7 +106,7 @@ public class LibraryJDBC {
         ps.setString(2, b.getTitle());
         ps.setInt(3, b.getNpages());
         ps.setString(4, b.getGenre());
-        ps.setString(5, b.getAuthor().getName());
+        ps.setInt(5, b.getAuthor().getIdauthor());
         ps.executeUpdate();
         ps.close();
         desconectar();
@@ -199,7 +199,7 @@ public class LibraryJDBC {
     public List<Book> allBooks() throws SQLException{
        List<Book> books = new ArrayList<>();
        conectar();
-       String query = "select * from book, author where book.author=author.idauthor;";
+       String query = "select * from book, author where book.author=author.idauthor order by isbn;";
        Statement st = connection.createStatement();
        ResultSet rs = st.executeQuery(query);
        while(rs.next()){
@@ -236,7 +236,7 @@ public class LibraryJDBC {
     public List<Author> allAuthors() throws SQLException{
        List<Author> authors = new ArrayList<>();
        conectar();
-       String query = "select * from author;";
+       String query = "select * from author order by idauthor;";
        Statement st = connection.createStatement();
        ResultSet rs = st.executeQuery(query);
        while(rs.next()){
