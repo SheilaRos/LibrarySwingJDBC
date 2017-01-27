@@ -7,24 +7,58 @@ package library;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import model.Author;
+import model.Book;
+import persistence.LibraryJDBC;
 
 /**
  *
  * @author dam
  */
 public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
+    LibraryJDBC gestor = new LibraryJDBC();
+    private List<Book> libros;
+    public List<Book> getLibros() {  return libros; }
+    public void setLibros(List<Book> libros) { this.libros = libros;}
+    private List<String> generos = Menu.generos;
+    public List<String> getGeneros() {return generos;}
+    public void setGeneros(List<String> generos) {  this.generos = generos; }   
+    private List<Author> autores;
+    public List<Author> getAutores() { return autores; }
+    public void setAutores(List<Author> autores) {this.autores = autores;}
 
-    /**
-     * Creates new form NuevoLibro
-     */
     public ModificarLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        try {
+            libros = gestor.allBooks();
+            autores = gestor.allAuthors();
+        } catch (SQLException ex) {
+            System.out.println(ex);
+        }       
         initComponents();
+        Book b = (Book) comboLibro.getSelectedItem();
+        ISBN.setText(b.getIsbn()+"");
+        for(Author a: autores){
+              if(b.getAuthor().getIdauthor()==a.getIdauthor()){
+                 comboAutores.setSelectedItem(a);
+              }
+          }
+        
+        comboGeneros.setSelectedItem(b.getGenre());
+        paginas.setValue(b.getNpages());
+        tituloLibro.setText(b.getTitle());
+        comboLibro.addItemListener(this);
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -61,7 +95,15 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
 
         comboAutores.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
+        org.jdesktop.beansbinding.ELProperty eLProperty = org.jdesktop.beansbinding.ELProperty.create("${autores}");
+        org.jdesktop.swingbinding.JComboBoxBinding jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, comboAutores);
+        bindingGroup.addBinding(jComboBoxBinding);
+
         comboGeneros.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${generos}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, comboGeneros);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         btn_modificar.setText("Modificar");
 
@@ -70,6 +112,10 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
         jLabel7.setText("Libro:");
 
         comboLibro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        eLProperty = org.jdesktop.beansbinding.ELProperty.create("${libros}");
+        jComboBoxBinding = org.jdesktop.swingbinding.SwingBindings.createJComboBoxBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, eLProperty, comboLibro);
+        bindingGroup.addBinding(jComboBoxBinding);
 
         jLabel8.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 51, 255));
@@ -156,6 +202,8 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -219,12 +267,23 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
     private javax.swing.JLabel jLabel8;
     private javax.swing.JSpinner paginas;
     private javax.swing.JTextField tituloLibro;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getStateChange() == ItemEvent.SELECTED) {
-          Object item = e.getItem();
+        if (e.getSource() == comboLibro) {
+          int selec = comboLibro.getSelectedIndex();
+          Book seleccionado = libros.get(selec);
+          ISBN.setText(seleccionado.getIsbn()+"");
+          tituloLibro.setText(seleccionado.getTitle());
+          paginas.setValue(seleccionado.getNpages());
+          for(Author a: autores){
+              if(seleccionado.getAuthor().getIdauthor()==a.getIdauthor()){
+                  comboAutores.setSelectedItem(a);
+              }
+          }
+          comboGeneros.setSelectedItem(seleccionado.getGenre());
        }
     }
 }

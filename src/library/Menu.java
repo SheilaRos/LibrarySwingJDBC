@@ -1,8 +1,37 @@
 package library;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Menu extends javax.swing.JFrame {
+    public static List<String> generos = new ArrayList<>();
+    public List<String> getGeneros() {return generos; }
+    public void setGeneros(List<String> generos) {this.generos = generos;}  
+    public static List<String> paises = new ArrayList<>();
+    public List<String> getPaises() { return paises; }
+    public void setPaises(List<String> paises) { this.paises = paises; }
     public Menu() {
         initComponents();
+        generos.add("Fantasía");
+        generos.add("Terror");
+        generos.add("Suspense");
+        generos.add("Cómic");
+        generos.add("Acción");
+        generos.add("Aventuras");
+        generos.add("Juvenil");
+        generos.add("Novela ligera");
+        generos.add("Ciencia ficción");
+        generos.add("Policiaca");
+        paises.add("Alemania");
+        paises.add("España");
+        paises.add("USA");
+        paises.add("Rusia");
+        paises.add("Inglaterra");
+        paises.add("Irlanda");
+        paises.add("Polonia");
+        paises.add("Francia");
+        paises.add("Japón");
+        paises.add("China");
         if(!Principal.admin){
             btn_altaUsu.setVisible(false);
         }

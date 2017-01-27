@@ -49,16 +49,17 @@ public class LibraryJDBC {
         ps.setString(2, b.getTitle());
         ps.setInt(3, b.getNpages());
         ps.setString(4, b.getGenre());
-        ps.setString(5, b.getAuthor().getName());
+        ps.setInt(5, b.getAuthor().getIdauthor());
         ps.executeUpdate();
         ps.close();
         desconectar();
     }
     public void insertAuthor(Author a) throws SQLException{
         conectar();
-        String insert = "insert into book values (?, ?, ?, ?);";
+        System.out.println("Entra en insertAu");
+        String insert = "insert into author values (?, ?, ?, ?);";
         PreparedStatement ps = connection.prepareStatement(insert);
-        int id = maxIdAuthor() + 1;
+        int id = maxIdAuthor()+1;
         ps.setInt(1, id);
         ps.setString(2, a.getName());
         ps.setString(3, a.getSurname());
@@ -68,11 +69,14 @@ public class LibraryJDBC {
         desconectar();
     }
     private int maxIdAuthor() throws SQLException{
+        int max=0;
         conectar();
         String query = "select max(idauthor) as 'maximo' from author;";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        int max = rs.getInt("maximo");
+        while(rs.next()){
+            max = rs.getInt("maximo");
+        }
         st.close();
         rs.close();
         desconectar();
@@ -193,9 +197,9 @@ public class LibraryJDBC {
         desconectar();
     }
     public List<Book> allBooks() throws SQLException{
-        List<Book> books = new ArrayList<>();
+       List<Book> books = new ArrayList<>();
        conectar();
-       String query = "select * from book;";
+       String query = "select * from book, author where book.author=author.idauthor;";
        Statement st = connection.createStatement();
        ResultSet rs = st.executeQuery(query);
        while(rs.next()){
@@ -205,7 +209,7 @@ public class LibraryJDBC {
             b.setTitle(rs.getString("title"));
             b.setNpages(rs.getInt("npages"));
             b.setGenre(rs.getString("genre"));
-            a.setName(rs.getString("author"));
+            a=devolverUnAutor(rs.getInt("author"));
             b.setAuthor(a);
             books.add(b);
         }
@@ -213,6 +217,21 @@ public class LibraryJDBC {
        rs.close();
        desconectar();
        return books;
+    }
+    public Author devolverUnAutor(int id) throws SQLException{
+        Author a = new Author();
+        conectar();
+        String query = "select * from author where idauthor="+id+";";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+           a.setIdauthor(rs.getInt("idauthor"));
+           a.setName(rs.getString("name"));
+           a.setSurname(rs.getString("surname"));
+           a.setCountry(rs.getString("country"));
+        }
+        desconectar();
+        return a;
     }
     public List<Author> allAuthors() throws SQLException{
        List<Author> authors = new ArrayList<>();

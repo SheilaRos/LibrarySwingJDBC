@@ -6,6 +6,7 @@
 package library;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,13 +17,12 @@ import persistence.LibraryJDBC;
 
 public class NuevoLibro extends javax.swing.JDialog {
     LibraryJDBC gestor = new LibraryJDBC();
-    private List<String> generos;
+   public List<String> generos = Menu.generos; 
     private List<Author> authors;
     public List<Author> getAuthors() {return authors; }
     public void setAuthors(List<Author> authors) { this.authors = authors; }
-    public List<String> getGeneros() {return generos; }
-    public void setGeneros(List<String> generos) {this.generos = generos;}
-    
+    public List<String> getGeneros() { return generos;}
+    public void setGeneros(List<String> generos) {  this.generos = generos; }
 
     public NuevoLibro(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -31,16 +31,6 @@ public class NuevoLibro extends javax.swing.JDialog {
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        generos.add("Fantasía");
-        generos.add("Terror");
-        generos.add("Suspense");
-        generos.add("Cómic");
-        generos.add("Acción");
-        generos.add("Aventuras");
-        generos.add("Juvenil");
-        generos.add("Novela ligera");
-        generos.add("Ciencia ficción");
-        generos.add("Policiaca");
         initComponents();
     }
     @SuppressWarnings("unchecked")
@@ -195,7 +185,8 @@ public class NuevoLibro extends javax.swing.JDialog {
                 JOptionPane.showMessageDialog(this, "Este libro ya está registrado", "Libro duplicado", JOptionPane.ERROR_MESSAGE);
             }else{
                 Author a = (Author)comboAutores.getSelectedItem();
-                Book b = new Book(isbn, tituloLibro.getText(), Integer.parseInt(paginas.getValue().toString()), comboGeneros.getSelectedItem().toString(), a);
+                int pag =(int) paginas.getValue();
+                Book b = new Book(isbn, tituloLibro.getText(), pag, comboGeneros.getSelectedItem().toString(), a);
                 gestor.insertBook(b);
                 JOptionPane.showMessageDialog(this, "Libro registrado", "Regitro de libros", JOptionPane.INFORMATION_MESSAGE);
                 this.dispose();

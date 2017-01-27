@@ -8,6 +8,11 @@ public class Author {
 
     public Author() {
     }
+
+    public Author(int idauthor) {
+        this.idauthor = idauthor;
+    }
+    
     public Author(String name) {
         this.name = name;
     }
