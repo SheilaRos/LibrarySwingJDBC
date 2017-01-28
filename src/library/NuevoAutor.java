@@ -137,9 +137,14 @@ public class NuevoAutor extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altaActionPerformed
-        if(nombre.getText().equals("") || apellidos.getText().equals("")){  
-            JOptionPane.showMessageDialog(this, "El nombre y apellido no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
-        } else{
+        String pais = (String) comboPais.getSelectedItem();
+        if(nombre.getText().equals("") || apellidos.getText().equals("") || pais.equals("Selecciona un país.")){  
+            JOptionPane.showMessageDialog(this, "El nombre, apellido y país no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else if(nombre.getText().length()>45){
+            JOptionPane.showMessageDialog(this, "El nombre no puede superar los 45 carácteres", "Nombre demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else if(apellidos.getText().length()>80){
+            JOptionPane.showMessageDialog(this, "El apellido no puede superar los 80 carácteres", "Apellido demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else{
             try {
                 if(gestor.comprobarAutor(nombre.getText(), apellidos.getText())){
                      JOptionPane.showMessageDialog(this, "Este autor ya existe", "Autor duplicado", JOptionPane.ERROR_MESSAGE);

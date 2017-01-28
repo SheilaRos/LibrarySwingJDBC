@@ -117,9 +117,14 @@ public class AltaUsu extends javax.swing.JDialog {
     }//GEN-LAST:event_btn_atrasActionPerformed
 
     private void btn_altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altaActionPerformed
-        String pass = new String(passw.getPassword());
+       String pass = new String(passw.getPassword());
+       
        if(usu.getText().equals("") || pass.equals("")){
             JOptionPane.showMessageDialog(this, "El usuario y la contraseña no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else if(usu.getText().length()>20){
+            JOptionPane.showMessageDialog(this, "El nombre de usuario no puede superar los 20 carácteres", "Nombre de usuario demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else if(pass.length()>8){
+            JOptionPane.showMessageDialog(this, "La contraseña no puede superar los 8 carácteres", "Contraseña demasiado extensa", JOptionPane.ERROR_MESSAGE);
         }else{    
             try{
                 if(gestor.comprobarUsuario(usu.getText())){

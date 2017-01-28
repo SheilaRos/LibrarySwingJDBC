@@ -43,6 +43,13 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
         }       
         initComponents();
         Book b = (Book) comboLibro.getSelectedItem();
+        if(b.getIsbn()==1){
+            ISBN.setVisible(false);
+            comboAutores.setVisible(false);
+            comboGeneros.setVisible(false);
+            paginas.setVisible(false);
+            tituloLibro.setVisible(false);
+        }
         ISBN.setText(b.getIsbn()+"");
         for(Author a: autores){
               if(b.getAuthor().getIdauthor()==a.getIdauthor()){
@@ -225,23 +232,31 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
     }//GEN-LAST:event_btn_atrasActionPerformed
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        Book bk = (Book)comboLibro.getSelectedItem();
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de modificar este libro: "+bk.getTitle() +"?", "Modificar libro", JOptionPane.OK_CANCEL_OPTION);
-        if (respuesta == JOptionPane.YES_OPTION) {
-            if(tituloLibro.getText().equals("") || ISBN.getText().equals("") || paginas.getValue().equals(0)){
-                JOptionPane.showMessageDialog(this, "El título y ISBN no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
-            }else{
-                int isbn = Integer.parseInt(ISBN.getText());
-                try{
-                    Author a = (Author)comboAutores.getSelectedItem();
-                    int pag =(int) paginas.getValue();
-                    Book b = new Book(isbn, tituloLibro.getText(), pag, comboGeneros.getSelectedItem().toString(), a);
-                    gestor.updateBook(b);
-                    JOptionPane.showMessageDialog(this, "Libro modificado", "Regitro de libros", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
-                }catch(Exception ex){
-                    System.out.println(ex);
-                }
+        Author a = (Author)comboAutores.getSelectedItem();
+        if(tituloLibro.getText().equals("") || ISBN.getText().equals("") || paginas.getValue().equals(0)){
+            JOptionPane.showMessageDialog(this, "El título, número de páginas y ISBN no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else if(ISBN.getText().length()>8){
+            JOptionPane.showMessageDialog(this, "El ISBN no puede superar los 8 carácteres", "ISBN demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else if(tituloLibro.getText().length()>200){
+            JOptionPane.showMessageDialog(this, "El titulo del libro no puede superar los 80 carácteres", "Nombre del titulo demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else if(comboGeneros.getSelectedItem().equals("Selecciona un genero")){
+            JOptionPane.showMessageDialog(this, "El genero no pueden quedar vacio", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else if(a.getName().equals("Selecciona un autor")){
+            JOptionPane.showMessageDialog(this, "El autor no pueden quedar vacio", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Book bk = (Book)comboLibro.getSelectedItem();
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de modificar este libro: "+bk.getTitle() +"?", "Modificar libro", JOptionPane.OK_CANCEL_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                    int isbn = Integer.parseInt(ISBN.getText());
+                    try{
+                        int pag =(int) paginas.getValue();
+                        Book b = new Book(isbn, tituloLibro.getText(), pag, comboGeneros.getSelectedItem().toString(), a);
+                        gestor.updateBook(b);
+                        JOptionPane.showMessageDialog(this, "Libro modificado", "Regitro de libros", JOptionPane.INFORMATION_MESSAGE);
+                        this.dispose();
+                    }catch(Exception ex){
+                        System.out.println(ex);
+                    }
             }
         }
     }//GEN-LAST:event_btn_modificarActionPerformed
@@ -314,6 +329,19 @@ public class ModificarLibro extends javax.swing.JDialog implements ItemListener{
         if (e.getSource() == comboLibro) {
           int selec = comboLibro.getSelectedIndex();
           Book seleccionado = libros.get(selec);
+          if(seleccionado.getIsbn()==1){
+            ISBN.setVisible(false);
+            comboAutores.setVisible(false);
+            comboGeneros.setVisible(false);
+            paginas.setVisible(false);
+            tituloLibro.setVisible(false);
+        }else{
+            ISBN.setVisible(true);
+            comboAutores.setVisible(true);
+            comboGeneros.setVisible(true);
+            paginas.setVisible(true);
+            tituloLibro.setVisible(true);
+        }
           ISBN.setText(seleccionado.getIsbn()+"");
           tituloLibro.setText(seleccionado.getTitle());
           paginas.setValue(seleccionado.getNpages());

@@ -108,15 +108,19 @@ public class EliminarLibro extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar este libro?", "Eliminar libro", JOptionPane.OK_CANCEL_OPTION);
-        if (respuesta == JOptionPane.YES_OPTION) {
-            Book b = (Book) comboLibro.getSelectedItem();
-            try {
-                gestor.deleteBook(b.getIsbn());
-            } catch (SQLException ex) {
-                System.out.println(ex);;
+        Book b = (Book) comboLibro.getSelectedItem();
+        if(b.getIsbn()==1){
+            JOptionPane.showMessageDialog(this, "Esto no es un libro, selecciona un libro", "Libro no valido", JOptionPane.ERROR_MESSAGE);
+        }else{   
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar este libro?", "Eliminar libro", JOptionPane.OK_CANCEL_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                try {
+                    gestor.deleteBook(b.getIsbn());
+                } catch (SQLException ex) {
+                    System.out.println(ex);;
+                }
+                this.dispose();
             }
-            this.dispose();
         }
     }//GEN-LAST:event_btn_eliminarActionPerformed
 

@@ -29,10 +29,16 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
         }
         initComponents();
         Author a = (Author) comboAutores.getSelectedItem();
+        if(a.getIdauthor()==1){
+            nombre.setVisible(false);
+            apellidos.setVisible(false);
+            comboPais.setVisible(false);
+        }
         nombre.setText(a.getName());
         apellidos.setText(a.getSurname());
         comboPais.setSelectedItem(a.getCountry());
         comboAutores.addItemListener(this);
+        
     }
 
 
@@ -179,19 +185,26 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
     }//GEN-LAST:event_btn_atrasActionPerformed
 
     private void btn_modificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_modificarActionPerformed
-        Author au = (Author)comboAutores.getSelectedItem();
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de modificar este autor: "+au+"?", "Modificar Autor", JOptionPane.OK_CANCEL_OPTION);
-        if (respuesta == JOptionPane.YES_OPTION) {
-            try {
-                Author a = new Author(au.getIdauthor(), nombre.getText(), apellidos.getText(), comboPais.getSelectedItem().toString());
-                gestor.updateAuthor(a);
-                JOptionPane.showMessageDialog(this, "Autor modificado", "Modificar autor", JOptionPane.INFORMATION_MESSAGE);
-                this.dispose();
-                
-            } catch (SQLException ex) {
-                System.out.println(ex);
+         if(nombre.getText().equals("") || apellidos.getText().equals("") || comboPais.getSelectedItem().equals("Selecciona un país.")){  
+            JOptionPane.showMessageDialog(this, "El nombre, apellido y país no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else if(nombre.getText().length()>45){
+            JOptionPane.showMessageDialog(this, "El nombre no puede superar los 45 carácteres", "Nombre demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else if(apellidos.getText().length()>80){
+            JOptionPane.showMessageDialog(this, "El apellido no puede superar los 80 carácteres", "Apellido demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else{
+            Author au = (Author)comboAutores.getSelectedItem();
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de modificar este autor: "+au+"?", "Modificar Autor", JOptionPane.OK_CANCEL_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                try {
+                    Author a = new Author(au.getIdauthor(), nombre.getText(), apellidos.getText(), comboPais.getSelectedItem().toString());
+                    gestor.updateAuthor(a);
+                    JOptionPane.showMessageDialog(this, "Autor modificado", "Modificar autor", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
             }
-        }
+         }
     }//GEN-LAST:event_btn_modificarActionPerformed
 
     /**
@@ -259,6 +272,15 @@ public class ModificarAutor extends javax.swing.JDialog implements ItemListener{
     public void itemStateChanged(ItemEvent e) {
        if (e.getSource() == comboAutores) {
           Author seleccionado = (Author) comboAutores.getSelectedItem();
+          if(seleccionado.getIdauthor()==1){
+            nombre.setVisible(false);
+            apellidos.setVisible(false);
+            comboPais.setVisible(false);
+          }else{  
+            nombre.setVisible(true);
+            apellidos.setVisible(true);
+            comboPais.setVisible(true);
+          }
           nombre.setText(seleccionado.getName());
           apellidos.setText(seleccionado.getSurname());
           comboPais.setSelectedItem(seleccionado.getCountry());

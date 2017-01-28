@@ -128,13 +128,13 @@ public class LibraryJDBC {
        conectar();
        String query;
        if(!author.equals("") && !genre.equals("")){
-           query = "select * from book where author='"+author+"' and genre='"+genre+"';";
-       }else if(!author.equals("")){
-           query = "select * from book where author='"+author+"';";
-       }else if(!genre.equals("")){
-           query = "select * from book where genre='"+genre+"';";
+           query = "select isbn, title, npages, genre, author from book, author where book.author=author.idauthor and author.name='"+author+"' and book.genre='"+genre+"' and book.isbn<>1;";
+       }else if(!author.equals("") && genre.equals("")){
+           query = "select isbn, title, npages, genre, author from book, author where book.author=author.idauthor and author.name='"+author+"' and book.isbn<>1;";
+       }else if(!genre.equals("") && author.equals("")){
+           query = "select isbn, title, npages, genre, author from book where book.genre='"+genre+"' and book.isbn<>1;";
        }else{
-           query = "select * from book;";
+           query = "select isbn, title, npages, genre, author from book where book.isbn<>1;";
        }
        Statement st = connection.createStatement();
        ResultSet rs = st.executeQuery(query);
@@ -145,7 +145,7 @@ public class LibraryJDBC {
             b.setTitle(rs.getString("title"));
             b.setNpages(rs.getInt("npages"));
             b.setGenre(rs.getString("genre"));
-            a.setName(rs.getString("author"));
+            a = devolverUnAutor(rs.getInt("author"));
             b.setAuthor(a);
             busqueda.add(b);
         }
@@ -199,7 +199,7 @@ public class LibraryJDBC {
     public List<Book> allBooks() throws SQLException{
        List<Book> books = new ArrayList<>();
        conectar();
-       String query = "select * from book, author where book.author=author.idauthor order by isbn;";
+       String query = "select isbn, title, npages, genre, author from book, author where book.author=author.idauthor order by isbn;";
        Statement st = connection.createStatement();
        ResultSet rs = st.executeQuery(query);
        while(rs.next()){

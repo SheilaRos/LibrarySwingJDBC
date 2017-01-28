@@ -121,17 +121,20 @@ public class EliminarAutor extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_eliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_eliminarActionPerformed
-        int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar este autor?", "Eliminar autor", JOptionPane.OK_CANCEL_OPTION);
-        if (respuesta == JOptionPane.YES_OPTION) {
-            
-            Author a = (Author) comboAutor.getSelectedItem();
-            try {
-                gestor.deleteAuthor(a.getIdauthor());
-            } catch (SQLException ex) {
-                System.out.println(ex);
+         Author a = (Author) comboAutor.getSelectedItem();
+        if(a.getIdauthor()==1){
+            JOptionPane.showMessageDialog(this, "Esto no es un autor, selecciona un autor", "Autor no valido", JOptionPane.ERROR_MESSAGE);
+        }else{ 
+            int respuesta = JOptionPane.showConfirmDialog(this, "¿Estas seguro de eliminar este autor?", "Eliminar autor", JOptionPane.OK_CANCEL_OPTION);
+            if (respuesta == JOptionPane.YES_OPTION) {
+                try {
+                    gestor.deleteAuthor(a.getIdauthor());
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
             }
+            this.dispose();
         }
-        this.dispose();
     }//GEN-LAST:event_btn_eliminarActionPerformed
 
     private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed

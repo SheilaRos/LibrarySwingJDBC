@@ -45,13 +45,13 @@ public class Menu extends javax.swing.JFrame {
         paises.add("Francia");
         paises.add("Japón");
         paises.add("China");
-        Author a = new Author(0, "Selecciona un autor", "", "");
-        Book b = new Book(0, "Selecciona un libro",0, "", a);
+        Author a = new Author(1, "Selecciona un autor", " ", "Selecciona un país");
+        Book b = new Book(1, "Selecciona un libro", 1, "Selecciona un genero", a);
         try {
-            if(!gestor.comprobarISBN(b.getIsbn())){
-             gestor.insertBook(b);
-            }if(!gestor.comprobarAutor(a.getName(), a.getSurname())){
+           if(!gestor.comprobarAutor(a.getName(), a.getSurname())){
                 gestor.insertAuthor(a);
+            } if(!gestor.comprobarISBN(b.getIsbn())){
+                gestor.insertBook(b);
             }
         } catch (SQLException ex) {
             System.out.println(ex);
@@ -183,20 +183,17 @@ public class Menu extends javax.swing.JFrame {
                         .addComponent(btn_consultas, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btn_l_modificar)
-                            .addComponent(btn_l_nuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_l_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_l_nuevo, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                            .addComponent(btn_l_eliminar, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                            .addComponent(btn_l_modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btn_a_nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(68, 68, 68))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btn_a_modificar)
-                                    .addComponent(btn_a_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))))
+                            .addComponent(btn_a_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btn_a_modificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btn_a_nombre, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)))
+                        .addGap(68, 68, 68))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,13 +216,13 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btn_a_modificar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_l_eliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_l_eliminar)
                     .addComponent(btn_a_eliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_consultas)
                 .addGap(18, 18, 18)
                 .addComponent(btn_altaUsu)
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();

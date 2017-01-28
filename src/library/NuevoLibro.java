@@ -176,15 +176,26 @@ public class NuevoLibro extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_altaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_altaActionPerformed
+        Author a = (Author)comboAutores.getSelectedItem();
+        boolean numerico = comprobarNumerico(ISBN.getText());
         if(tituloLibro.getText().equals("") || ISBN.getText().equals("") || paginas.getValue().equals(0)){
             JOptionPane.showMessageDialog(this, "El título y ISBN no pueden quedar vacios", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else if(!numerico){
+            JOptionPane.showMessageDialog(this, "El ISBN ha de ser númerico", "Campos con información erronea", JOptionPane.ERROR_MESSAGE);
+        }else if(ISBN.getText().length()>8){
+            JOptionPane.showMessageDialog(this, "El ISBN no puede superar los 8 carácteres", "ISBN demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else if(tituloLibro.getText().length()>200){
+            JOptionPane.showMessageDialog(this, "El titulo del libro no puede superar los 80 carácteres", "Nombre del titulo demasiado extenso", JOptionPane.ERROR_MESSAGE);
+        }else if(comboGeneros.getSelectedItem().equals("Selecciona un genero")){
+            JOptionPane.showMessageDialog(this, "El genero no pueden quedar vacio", "Campos vacios", JOptionPane.ERROR_MESSAGE);
+        }else if(a.getName().equals("Selecciona un autor")){
+            JOptionPane.showMessageDialog(this, "El autor no pueden quedar vacio", "Campos vacios", JOptionPane.ERROR_MESSAGE);
         }else{
             int isbn = Integer.parseInt(ISBN.getText());
             try{
             if(gestor.comprobarISBN(isbn)){
-                JOptionPane.showMessageDialog(this, "Este libro ya está registrado", "Libro duplicado", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Ya existe un libro con este ISBN en nuestra BBDD", "Libro duplicado", JOptionPane.ERROR_MESSAGE);
             }else{
-                Author a = (Author)comboAutores.getSelectedItem();
                 int pag =(int) paginas.getValue();
                 Book b = new Book(isbn, tituloLibro.getText(), pag, comboGeneros.getSelectedItem().toString(), a);
                 gestor.insertBook(b);
@@ -196,7 +207,14 @@ public class NuevoLibro extends javax.swing.JDialog {
             }
         }
     }//GEN-LAST:event_btn_altaActionPerformed
-
+    public boolean comprobarNumerico(String isbn){
+        try{
+            Integer.parseInt(isbn);
+            return true;
+        }catch(NumberFormatException nfe){
+            return false;
+        }
+    }
     private void btn_atrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_atrasActionPerformed
         this.dispose();
     }//GEN-LAST:event_btn_atrasActionPerformed

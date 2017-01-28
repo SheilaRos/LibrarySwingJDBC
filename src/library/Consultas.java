@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import model.Author;
 import model.Book;
 import persistence.LibraryJDBC;
@@ -116,44 +117,39 @@ public class Consultas extends javax.swing.JDialog {
             }
         });
 
-        btn_salir.setText("Salir");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btn_anterior)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_siguiente)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel3))
+                        .addGap(49, 49, 49)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(autor, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)
+                            .addComponent(tituloL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jLabel3))
-                                .addGap(49, 49, 49)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(tituloL, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(isbn, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(autor, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(numPag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(genero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 8, Short.MAX_VALUE))
+                                .addComponent(isbn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(btn_anterior)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_siguiente)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_salir)))
-                .addContainerGap())
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(genero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(numPag, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,35 +177,42 @@ public class Consultas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_anterior)
-                    .addComponent(btn_siguiente)
-                    .addComponent(btn_salir))
+                    .addComponent(btn_siguiente))
                 .addGap(33, 33, 33))
         );
+
+        btn_salir.setText("Salir");
+        btn_salir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_salirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
+                        .addComponent(jLabel1)
+                        .addGap(26, 26, 26)
+                        .addComponent(comboAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ComboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(26, 26, 26)
-                                .addComponent(comboAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(ComboGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                                .addGap(10, 10, 10)
+                                .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(136, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(btn_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(btn_salir)
+                .addGap(2, 2, 2))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,7 +228,11 @@ public class Consultas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_buscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_salir)
+                        .addGap(33, 33, 33))))
         );
 
         bindingGroup.bind();
@@ -234,29 +241,27 @@ public class Consultas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_buscarActionPerformed
-        System.out.println("Entra");
+        contadorClick = 0;
+        btn_anterior.setVisible(false);
         Author a = (Author) comboAutor.getSelectedItem();
         String g = (String)ComboGenero.getSelectedItem();
-        if(a.equals("Selecciona un autor") && g.equals("Selecciona un genero")){
-            
-        }else{
             try {
-                System.out.println("Sigue por aqui");
-                if(a.getName().equals("Selecciona un autor")){
-                    System.out.println("entra aqui tambien");
+                if(a.getName().equals("Selecciona un autor") && !g.equals("Selecciona un genero")){
                     librosEncontrados = gestor.consultas("", g);
-                }else if(g.equals("Selecciona un genero")){
+                }else if(g.equals("Selecciona un genero") && !a.getName().equals("Selecciona un autor")){
                     librosEncontrados = gestor.consultas(a.getName(), "");
-                }else{
+                }else if(a.getName().equals("Selecciona un autor") && g.equals("Selecciona un genero")){
+                    librosEncontrados = gestor.consultas("", "");
+                }
+                else{
                     librosEncontrados = gestor.consultas(a.getName(), g);
                 }
                 if(librosEncontrados.size()==0){
-                    
+                    JOptionPane.showMessageDialog(this, "No existe resultado para esta busqueda", "No hay resultado", JOptionPane.ERROR_MESSAGE);
+                    jPanel1.setVisible(false);
                 }else{
-                    System.out.println("va a pintar");
-                    rellenar();
-                    System.out.println("pinta?");
-                    if(librosEncontrados.size()<1){
+                    rellenar();                    
+                    if(librosEncontrados.size()<=1){
                         btn_siguiente.setVisible(false);
                     }
                     jPanel1.setVisible(true); 
@@ -264,7 +269,7 @@ public class Consultas extends javax.swing.JDialog {
             } catch (SQLException ex) {
                System.out.println(ex);
             } 
-        }
+        
         
     }//GEN-LAST:event_btn_buscarActionPerformed
 
@@ -274,9 +279,10 @@ public class Consultas extends javax.swing.JDialog {
         }
         contadorClick++;
         rellenar();
-        System.out.println(contadorClick);
-        System.out.println(librosEncontrados.size());
-        btn_siguiente.setVisible(false);
+        int tope = librosEncontrados.size()-1;
+        if(tope==contadorClick){
+            btn_siguiente.setVisible(false);
+        }
         
     }//GEN-LAST:event_btn_siguienteActionPerformed
 
@@ -286,21 +292,23 @@ public class Consultas extends javax.swing.JDialog {
         if(contadorClick==0){
             btn_anterior.setVisible(false);
         }
+        btn_siguiente.setVisible(true);
     }//GEN-LAST:event_btn_anteriorActionPerformed
+
+    private void btn_salirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_salirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btn_salirActionPerformed
     
     public void rellenar(){
-        Book b = librosEncontrados.get(contadorClick);
-        Author a = new Author();
-        try {
-            a = gestor.devolverUnAutor(b.getAuthor().getIdauthor());
-        } catch (SQLException ex) {
-            System.out.println(ex);
+        for(Book bk: librosEncontrados){
+            System.out.println(bk);
         }
+        Book b = (Book) librosEncontrados.get(contadorClick);
         tituloL.setText(b.getTitle());
         genero.setText(b.getGenre());
         isbn.setText(b.getIsbn()+"");
         numPag.setText(b.getNpages()+"");
-        autor.setText(a.getName()+" "+a.getSurname());
+        autor.setText(b.getAuthor().getName()+" "+b.getAuthor().getSurname());
     }
     public static void main(String args[]) {
 
