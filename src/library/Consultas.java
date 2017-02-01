@@ -263,6 +263,8 @@ public class Consultas extends javax.swing.JDialog {
                     rellenar();                    
                     if(librosEncontrados.size()<=1){
                         btn_siguiente.setVisible(false);
+                    }else{
+                        btn_siguiente.setVisible(true);
                     }
                     jPanel1.setVisible(true); 
                 }
